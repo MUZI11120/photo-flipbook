@@ -188,11 +188,24 @@
   }
   .caption-field input:focus { border-color: rgba(212,68,43,.8); box-shadow: 0 0 0 3px rgba(212,68,43,.12); }
   .caption-foot {
-    display: flex; justify-content: space-between; gap: 10px;
+    display: flex; flex-wrap: wrap; justify-content: space-between; gap: 10px;
     padding: 14px 18px calc(14px + env(safe-area-inset-bottom, 0px)); border-top: 1px solid var(--line);
   }
-  .ghost-btn, .done-btn {
+  .ghost-btn, .done-btn, .share-btn {
     height: 38px; padding: 0 16px; border-radius: 19px; cursor: pointer; font: inherit; letter-spacing: .08em;
+  }
+  .share-btn {
+    border: 1px solid rgba(212,68,43,.55); background: rgba(212,68,43,.14); color: #f5ded7;
+  }
+  .share-btn:hover { background: rgba(212,68,43,.24); }
+  .share-status {
+    align-self: center; min-width: 88px; font-size: 12px; color: var(--muted);
+    opacity: 0; transition: opacity .25s; text-align: right;
+  }
+  .share-status.show { opacity: 1; }
+  @media (max-width: 520px) {
+    .share-status { order: 10; width: 100%; min-width: 0; text-align: right; }
+    .ghost-btn, .done-btn, .share-btn { flex: 1; padding: 0 10px; }
   }
   .ghost-btn { border: 1px solid var(--line); background: none; color: var(--muted); }
   .ghost-btn:hover { color: var(--ink); border-color: rgba(236,229,216,.35); }

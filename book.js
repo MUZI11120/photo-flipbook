@@ -146,6 +146,37 @@
   try { CAPTION_OVERRIDES = JSON.parse(localStorage.getItem(CAPTION_STORAGE_KEY) || "{}") || {}; }
   catch (e) { CAPTION_OVERRIDES = {}; }
 
+  function readSharedCaptions() {
+    try {
+      const params = new URLSearchParams(location.hash.startsWith("#") ? location.hash.slice(1) : location.hash);
+      const encoded = params.get("captions");
+      if (!encoded) return null;
+      const base64 = encoded.replace(/-/g, "+").replace(/_/g, "/");
+      const padded = base64 + "=".repeat((4 - base64.length % 4) % 4);
+      const bytes = Uint8Array.from(atob(padded), (char) => char.charCodeAt(0));
+      const decoded = JSON.parse(new TextDecoder().decode(bytes));
+      if (!decoded || typeof decoded !== "object" || Array.isArray(decoded)) return {};
+      const clean = {};
+      for (const [file, value] of Object.entries(decoded)) {
+        if (DEFAULT_CAPTIONS.has(file)) clean[file] = String(value ?? "");
+      }
+      return clean;
+    } catch (e) { return {}; }
+  }
+
+  function encodeSharedCaptions() {
+    const bytes = new TextEncoder().encode(JSON.stringify(CAPTION_OVERRIDES));
+    let binary = "";
+    for (const byte of bytes) binary += String.fromCharCode(byte);
+    return btoa(binary).replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/, "");
+  }
+
+  const sharedCaptions = readSharedCaptions();
+  if (sharedCaptions) {
+    CAPTION_OVERRIDES = sharedCaptions;
+    saveCaptionOverrides();
+  }
+
   function captionFor(file) {
     return Object.prototype.hasOwnProperty.call(CAPTION_OVERRIDES, file)
       ? String(CAPTION_OVERRIDES[file] ?? "")
@@ -234,6 +265,7 @@
     const openBtn = $("#captionBtn"), modal = $("#captionModal"), fields = $("#captionFields");
     if (!openBtn || !modal || !fields) return;
     const closeBtn = $("#captionClose"), doneBtn = $("#captionDone"), resetBtn = $("#captionReset");
+    const shareBtn = $("#captionShare"), shareStatus = $("#captionShareStatus");
     const inputs = new Map();
 
     for (const file of DEFAULT_CAPTIONS.keys()) {
@@ -265,6 +297,23 @@
       saveCaptionOverrides();
       repaintCaptions();
       inputs.forEach((input, file) => { input.value = captionFor(file); });
+    });
+
+    shareBtn.addEventListener("click", async () => {
+      const url = new URL(location.href);
+      const hasChanges = Object.keys(CAPTION_OVERRIDES).length > 0;
+      url.hash = hasChanges ? "captions=" + encodeSharedCaptions() : "";
+      history.replaceState(null, "", url);
+      const text = url.toString();
+      try {
+        await navigator.clipboard.writeText(text);
+        shareStatus.textContent = hasChanges ? "已保存，链接已复制" : "已保存默认版链接";
+      } catch (e) {
+        shareStatus.textContent = "已保存，请复制上方地址栏链接";
+      }
+      shareStatus.classList.add("show");
+      clearTimeout(shareBtn._statusTimer);
+      shareBtn._statusTimer = setTimeout(() => shareStatus.classList.remove("show"), 4200);
     });
   }
   initCaptionEditor();
