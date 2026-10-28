@@ -141,7 +141,8 @@
     if (spread.left?.file) DEFAULT_CAPTIONS.set(spread.left.file, spread.left.caption || "");
     if (spread.right?.file) DEFAULT_CAPTIONS.set(spread.right.file, spread.right.caption || "");
   });
-  const CAPTION_STORAGE_KEY = BOOK.id + "-page-captions";
+  const CAPTIONS_VERSION = "2026-10-28-shared-version";
+  const CAPTION_STORAGE_KEY = BOOK.id + "-page-captions-" + CAPTIONS_VERSION;
   let CAPTION_OVERRIDES = {};
   try { CAPTION_OVERRIDES = JSON.parse(localStorage.getItem(CAPTION_STORAGE_KEY) || "{}") || {}; }
   catch (e) { CAPTION_OVERRIDES = {}; }
