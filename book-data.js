@@ -12,12 +12,12 @@ window.PHOTOBOOK = {
       "id": "s01",
       "left": {
         "file": "page-01.jpg",
-        "caption": "手腕上的手链",
+        "caption": "手牵手我们一起走~~",
         "alt": "左侧照片页"
       },
       "right": {
         "file": "page-02.jpg",
-        "caption": "课堂笔记",
+        "caption": "笔芯",
         "alt": "右侧照片页"
       }
     },
@@ -38,12 +38,12 @@ window.PHOTOBOOK = {
       "id": "s03",
       "left": {
         "file": "page-05.jpg",
-        "caption": "甜品时光",
+        "caption": "",
         "alt": "左侧照片页"
       },
       "right": {
         "file": "page-06.jpg",
-        "caption": "湖边",
+        "caption": "",
         "alt": "右侧照片页"
       }
     },
@@ -51,12 +51,12 @@ window.PHOTOBOOK = {
       "id": "s04",
       "left": {
         "file": "page-07.jpg",
-        "caption": "落雨的伞",
+        "caption": "",
         "alt": "左侧照片页"
       },
       "right": {
         "file": "page-08.jpg",
-        "caption": "镜子里的下午",
+        "caption": "",
         "alt": "右侧照片页"
       }
     },
@@ -64,12 +64,12 @@ window.PHOTOBOOK = {
       "id": "s05",
       "left": {
         "file": "page-09.jpg",
-        "caption": "条纹衬衫",
+        "caption": "",
         "alt": "左侧照片页"
       },
       "right": {
         "file": "page-10.jpg",
-        "caption": "话筒后面",
+        "caption": "",
         "alt": "右侧照片页"
       }
     },
@@ -77,12 +77,12 @@ window.PHOTOBOOK = {
       "id": "s06",
       "left": {
         "file": "page-11.jpg",
-        "caption": "花拱门",
+        "caption": "",
         "alt": "左侧照片页"
       },
       "right": {
         "file": "page-12.jpg",
-        "caption": "红电话亭",
+        "caption": "",
         "alt": "右侧照片页"
       }
     },
@@ -90,7 +90,7 @@ window.PHOTOBOOK = {
       "id": "s07",
       "left": {
         "file": "page-13.jpg",
-        "caption": "海边风",
+        "caption": "",
         "alt": "左侧照片页"
       },
       "right": {
